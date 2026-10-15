@@ -78,10 +78,19 @@ class HomeController(private val couponnote: CouponnoteClient) {
 
 ## 배포 (홈서버)
 
-1. 최초 1회: `deploy/schema.sql`을 tennis-mysql에서 실행, `coupon` 계정 생성
-2. 홈서버 `/home/highjune/services/couponnote/`에 `deploy/docker-compose.yml` 복사 + `.env`에 `COUPON_DB_PASSWORD`
-3. nginx `couponnote.kr` server 블록 → `127.0.0.1:8081`
-4. 이후: `git push origin release` → Jenkins(2분 폴링) → 빌드·테스트 → DockerHub push → compose up
+최초 세팅은 2026-10-15 완료. 상세 실측은 `highjune-archiving/.../home-server-architecture.md`.
+
+| 항목 | 상태 |
+|---|---|
+| DB | tennis-mysql에 `coupon` 스키마 + `coupon` 계정. DDL은 `deploy/schema.sql` |
+| 서버 폴더 | `/home/highjune/services/couponnote/{docker-compose.yml,.env}` (.env에 `COUPON_DB_PASSWORD`, 600) |
+| nginx | `/etc/nginx/sites-available/couponnote.kr` → `127.0.0.1:8081`. certbot 인증서, 80→443 리다이렉트 |
+| DNS | Cloudflare, A `couponnote.kr` → 홈서버 공인 IP (DNS only) |
+| Jenkins | 잡 `couponnote-pipeline`. **public 레포라 HTTPS 익명 clone** (배포키 불필요). Jenkins 컨테이너에 `/home/highjune/services/couponnote` 마운트 |
+
+배포: `git push origin release` → Jenkins(2분 폴링) → `:api:bootJar :api:test` → DockerHub `highjunea37/couponnote-api:latest` → `docker compose pull && up -d`
+
+스키마 변경 시: `deploy/schema.sql`에 ALTER 추가 → 서버에서 `docker exec -i tennis-mysql mysql -ucoupon -p coupon < 변경분` 수동 적용 → 배포
 
 ## 운영 규칙
 
