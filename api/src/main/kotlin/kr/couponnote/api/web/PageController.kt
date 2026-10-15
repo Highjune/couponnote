@@ -21,6 +21,13 @@ class PageController(
         return "home"
     }
 
+    /** 사이트 소개·제휴 문의. 리터럴 경로라 /{brand} 보다 우선 매칭 */
+    @GetMapping("/about")
+    fun about(model: Model): String {
+        model.addAttribute("canonical", "/about")
+        return "about"
+    }
+
     /** 브랜드 메인: /myrealtrip — 쿠폰 섹션 + 보조 글 목록 */
     @GetMapping("/{brand:[a-z0-9-]+}")
     fun brand(@PathVariable brand: String, model: Model): String {

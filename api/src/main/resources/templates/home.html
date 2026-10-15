@@ -3,16 +3,27 @@
       th:replace="~{layout :: layout('할인코드·쿠폰 총정리', '마이리얼트립 등 여행·쇼핑·구독 플랫폼의 할인코드, 쿠폰, 카드사 즉시할인을 매달 갱신해 정리합니다.', ~{::content})}">
 <body>
 <div th:fragment="content">
-  <h1>이번 달 할인코드·쿠폰</h1>
+  <section class="hero">
+    <p class="eyebrow">매달 갱신 · 무료</p>
+    <h1>이번 달 할인코드,<br>한 곳에서 확인하세요</h1>
+    <p class="lead">결제 전에 30초만. 쿠폰노트가 플랫폼별 할인코드·쿠폰·카드사 혜택을 정리해 둡니다.</p>
+  </section>
+
   <section class="category" th:each="s : ${sections}">
-    <h2 th:text="${s.category.label}">카테고리</h2>
-    <p class="meta" th:text="${s.category.description}">설명</p>
+    <div class="section-head">
+      <span class="section-icon" th:text="${s.category.emoji}">✈️</span>
+      <div>
+        <h2 th:text="${s.category.label}">카테고리</h2>
+        <p class="meta" th:text="${s.category.description}">설명</p>
+      </div>
+    </div>
     <ul class="brand-cards">
       <li th:each="b : ${s.brands}">
         <a th:href="@{/{slug}(slug=${b.slug})}">
           <strong th:text="${b.name}">브랜드</strong>
           <span th:text="${b.tagline}">소개</span>
-          <em th:text="'유효 쿠폰 ' + ${b.liveCouponCount} + '개'">유효 쿠폰</em>
+          <em><i class="dot"></i><span th:text="'유효 쿠폰 ' + ${b.liveCouponCount} + '개'">유효 쿠폰</span></em>
+          <b class="arrow">할인코드 보기 →</b>
         </a>
       </li>
     </ul>

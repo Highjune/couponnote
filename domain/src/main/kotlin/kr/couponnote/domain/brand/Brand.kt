@@ -11,10 +11,10 @@ import jakarta.persistence.Table
 import kr.couponnote.domain.common.BaseEntity
 
 /** 홈에서 브랜드를 묶는 단위. 선언 순서가 홈 섹션 순서 */
-enum class BrandCategory(val label: String, val description: String) {
-    TRAVEL("여행 쿠폰", "숙박·투어·항공까지, 여행을 더 저렴하게"),
-    SHOPPING("쇼핑 할인코드", "국내외 쇼핑몰 최신 쿠폰"),
-    SUBSCRIPTION("구독 서비스 쿠폰", "게임·콘텐츠·앱 구독을 더 싸게"),
+enum class BrandCategory(val label: String, val description: String, val emoji: String) {
+    TRAVEL("여행 쿠폰", "숙박·투어·항공까지, 여행을 더 저렴하게", "✈️"),
+    SHOPPING("쇼핑 할인코드", "국내외 쇼핑몰 최신 쿠폰", "🛍️"),
+    SUBSCRIPTION("구독 서비스 쿠폰", "게임·콘텐츠·앱 구독을 더 싸게", "🎮"),
 }
 
 /**

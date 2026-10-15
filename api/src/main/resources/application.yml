@@ -20,6 +20,7 @@ server:
 couponnote:
   site-url: https://couponnote.kr
   disclosure: "마이리얼트립과 함께하는 마케팅 파트너십을 통해, 여행자가 구매할 때마다 일정 비율의 수수료를 지급받습니다."
+  contact-email: ${CONTACT_EMAIL:hello@couponnote.kr}
 
 management:
   endpoints:

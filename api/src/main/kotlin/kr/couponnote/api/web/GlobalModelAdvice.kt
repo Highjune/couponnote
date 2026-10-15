@@ -12,4 +12,7 @@ class GlobalModelAdvice(private val site: SiteProperties) {
 
     @ModelAttribute("disclosure")
     fun disclosure(): String = site.disclosure
+
+    @ModelAttribute("contactEmail")
+    fun contactEmail(): String = site.contactEmail
 }

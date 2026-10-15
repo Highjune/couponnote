@@ -7,15 +7,29 @@
   <meta name="description" th:content="${description}">
   <link rel="canonical" th:href="${siteUrl} + ${canonical}">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="쿠폰노트">
   <meta property="og:title" th:content="${title}">
   <meta property="og:description" th:content="${description}">
   <meta property="og:url" th:content="${siteUrl} + ${canonical}">
+  <meta property="og:image" th:content="${siteUrl} + '/img/og.jpg'">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.png" sizes="48x48">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
   <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
 <body>
   <header class="site-header">
-    <a href="/" class="logo">쿠폰노트</a>
-    <nav><a href="/myrealtrip">마이리얼트립</a></nav>
+    <div class="wrap">
+      <a href="/" class="logo" aria-label="쿠폰노트 홈">
+        <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="8" fill="#ff5a5f"/><circle cx="6" cy="32" r="6" fill="#fff"/><circle cx="58" cy="32" r="6" fill="#fff"/><path d="M26 24v16M38 24v16" stroke="#fff" stroke-width="4" stroke-dasharray="3 4" stroke-linecap="round"/></svg>
+        <span>쿠폰<b>노트</b></span>
+      </a>
+      <nav>
+        <a href="/myrealtrip">마이리얼트립</a>
+        <a href="/about">소개</a>
+      </nav>
+    </div>
   </header>
 
   <main class="container">
@@ -24,7 +38,12 @@
   </main>
 
   <footer class="site-footer">
-    <p>쿠폰노트 · 할인코드와 쿠폰을 매달 정리합니다. 쿠폰은 플랫폼 정책에 따라 예고 없이 변경될 수 있습니다.</p>
+    <div class="wrap">
+      <p><b>쿠폰노트</b> · 할인코드와 쿠폰을 매달 정리합니다. 쿠폰은 플랫폼 정책에 따라 예고 없이 변경될 수 있습니다.</p>
+      <p><a href="/about">사이트 소개 · 제휴 문의</a></p>
+    </div>
   </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script th:src="@{/js/site.js}" defer></script>
 </body>
 </html>

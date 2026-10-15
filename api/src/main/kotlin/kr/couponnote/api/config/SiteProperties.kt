@@ -6,4 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 data class SiteProperties(
     val siteUrl: String,
     val disclosure: String,
+    /** 소개·제휴 문의 주소. 템플릿에만 노출 */
+    val contactEmail: String,
 )

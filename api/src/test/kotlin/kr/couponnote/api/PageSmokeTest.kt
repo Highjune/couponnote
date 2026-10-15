@@ -41,6 +41,23 @@ class PageSmokeTest(@Autowired private val mvc: MockMvc) {
     }
 
     @Test
+    fun `brand page has copy button and go link carrying the code`() {
+        mvc.get("/myrealtrip").andExpect {
+            status { isOk() }
+            content { string(org.hamcrest.Matchers.containsString("data-code=\"EXAMPLE10\"")) }
+            content { string(org.hamcrest.Matchers.containsString("코드 복사하고 받으러 가기")) }
+        }
+    }
+
+    @Test
+    fun `about page is served before the brand catch-all`() {
+        mvc.get("/about").andExpect {
+            status { isOk() }
+            content { string(org.hamcrest.Matchers.containsString("쿠폰노트 소개")) }
+        }
+    }
+
+    @Test
     fun `unknown brand is 404`() {
         mvc.get("/nope").andExpect { status { isNotFound() } }
     }

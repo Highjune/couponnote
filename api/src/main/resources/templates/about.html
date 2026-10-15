@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('사이트 소개 · 제휴 문의', '쿠폰노트는 여행·쇼핑·구독 플랫폼의 할인코드와 쿠폰을 매달 한 곳에 정리하는 사이트입니다.', ~{::content})}">
+<body>
+<div th:fragment="content">
+  <p class="breadcrumb"><a href="/">홈</a> › 소개</p>
+  <article class="prose">
+    <h1>쿠폰노트 소개</h1>
+    <p>쿠폰노트는 "결제하기 전에 쓸 수 있는 할인코드가 있나?"를 매번 찾아다니지 않도록, 플랫폼별 할인코드·쿠폰·카드사 혜택을 <b>매달 한 페이지</b>에 정리합니다.</p>
+
+    <h2>운영 원칙</h2>
+    <ul>
+      <li><b>매달 갱신</b> — 플랫폼 공식 채널에 공개된 혜택만 싣고, 만료된 쿠폰은 자동으로 내립니다.</li>
+      <li><b>조건을 숨기지 않음</b> — 최소 결제금액, 사용 기간, 중복 불가 조건을 함께 적습니다.</li>
+      <li><b>가입·설치 요구 없음</b> — 코드를 복사해서 플랫폼 결제창에 붙여넣기만 하면 됩니다.</li>
+    </ul>
+
+    <h2>수익 구조 안내</h2>
+    <p th:text="${disclosure}">공정위 문구</p>
+    <p>버튼을 눌러 이동한 뒤 구매가 발생하면 플랫폼이 쿠폰노트에 수수료를 지급합니다. 구매자가 내는 가격에는 영향이 없습니다.</p>
+
+    <h2>제휴 · 오류 제보</h2>
+    <p>쿠폰 정보가 틀렸거나, 플랫폼 입점·제휴를 원하시면 아래로 연락 주세요.</p>
+    <p><a th:href="'mailto:' + ${contactEmail}" th:text="${contactEmail}">이메일</a></p>
+  </article>
+</div>
+</body>
+</html>
