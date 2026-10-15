@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('페이지를 찾을 수 없습니다', '요청한 페이지가 없습니다.', ~{::content})}">
+<body>
+<div th:fragment="content">
+  <h1>페이지를 찾을 수 없습니다</h1>
+  <p><a href="/">홈으로</a></p>
+</div>
+</body>
+</html>

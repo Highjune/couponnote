@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('[' + ${page.monthLabel} + '] ' + ${page.name} + ' 할인코드·쿠폰 총정리', ${page.name} + ' 할인코드, 쿠폰팩, 카드사 즉시할인, 여행지별 쿠폰을 ' + ${page.monthLabel} + ' 기준으로 정리했습니다.', ~{::content})}">
+<body>
+<div th:fragment="content">
+  <h1 th:text="'[' + ${page.monthLabel} + '] ' + ${page.name} + ' 할인코드·쿠폰 총정리'">제목</h1>
+  <p class="lead" th:text="${page.tagline}">소개</p>
+
+  <section th:each="s : ${page.sections}" class="coupon-section">
+    <h2 th:text="${s.label}">섹션</h2>
+    <table class="coupon-table">
+      <thead><tr><th>혜택</th><th>코드</th><th>조건</th><th>만료</th><th></th></tr></thead>
+      <tbody>
+        <tr th:each="c : ${s.coupons}">
+          <td>
+            <strong th:text="${c.title}">제목</strong><br>
+            <span th:text="${c.benefit}">혜택</span>
+          </td>
+          <td><code th:if="${c.code}" th:text="${c.code}">CODE</code><span th:unless="${c.code}">코드 불필요</span></td>
+          <td th:text="${c.condition} ?: '-'">조건</td>
+          <td th:text="${c.endsAt} != null ? ${#temporals.format(c.endsAt, 'M/d')} : '상시'">만료</td>
+          <td><a class="btn" th:href="@{/go/{id}(id=${c.id})}" rel="sponsored nofollow" target="_blank">받기 →</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section th:if="${!articles.isEmpty()}" class="articles">
+    <h2>함께 보면 좋은 글</h2>
+    <ul>
+      <li th:each="a : ${articles}">
+        <a th:href="@{/{brand}/{slug}(brand=${page.slug}, slug=${a.slug})}" th:text="${a.title}">글</a>
+        <span th:text="${a.description}">설명</span>
+      </li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

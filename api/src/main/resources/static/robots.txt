@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /go/
+Disallow: /actuator/
+Sitemap: https://couponnote.kr/sitemap.xml

@@ -1,0 +1,22 @@
+# 홈서버 /home/highjune/services/couponnote/docker-compose.yml 로 복사해서 사용.
+# DB는 tennis-mysql(스키마 coupon)을 공유. 같은 docker 네트워크(snt-record_app-network)에 붙는다.
+services:
+  api:
+    image: highjunea37/couponnote-api:latest
+    container_name: couponnote-api
+    restart: always
+    ports:
+      - "127.0.0.1:8081:8081"     # nginx 뒤에서만
+    environment:
+      - SPRING_PROFILES_ACTIVE=beta
+      - DB_HOST=tennis-mysql
+      - DB_USER=coupon
+      - DB_PASSWORD=${COUPON_DB_PASSWORD}   # 같은 폴더의 .env 에서 주입
+      - TZ=Asia/Seoul
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+    name: snt-record_app-network

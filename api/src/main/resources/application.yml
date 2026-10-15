@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: couponnote-api
+  profiles:
+    default: local
+  thymeleaf:
+    cache: true
+  jpa:
+    open-in-view: false
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 7d
+
+server:
+  port: 8081
+  forward-headers-strategy: native   # nginx 뒤에서 X-Forwarded-* 신뢰
+
+couponnote:
+  site-url: https://couponnote.kr
+  disclosure: "마이리얼트립과 함께하는 마케팅 파트너십을 통해, 여행자가 구매할 때마다 일정 비율의 수수료를 지급받습니다."
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+logging:
+  structured:
+    format:
+      console: ecs
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:h2:mem:couponnote;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+    show-sql: false
+  sql:
+    init:
+      mode: always
+  thymeleaf:
+    cache: false
+  h2:
+    console:
+      enabled: true
+
+logging:
+  structured:
+    format:
+      console: ""   # 로컬은 사람이 읽는 텍스트
+
+---
+spring:
+  config:
+    activate:
+      on-profile: beta
+  datasource:
+    url: jdbc:mysql://${DB_HOST:mysql_db}:3306/coupon?serverTimezone=Asia/Seoul&characterEncoding=utf8
+    username: ${DB_USER:coupon}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # 스키마는 DDL 파일로 수동 관리
+  sql:
+    init:
+      mode: never

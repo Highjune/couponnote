@@ -1,0 +1,21 @@
+package kr.couponnote.domain.coupon
+
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import java.time.LocalDate
+
+interface CouponRepository : JpaRepository<Coupon, Long> {
+    @Query(
+        """
+        select c from Coupon c
+        where c.brand.id = :brandId
+          and c.active = true
+          and (c.startsAt is null or c.startsAt <= :today)
+          and (c.endsAt is null or c.endsAt >= :today)
+        order by c.kind asc, c.sortOrder asc, c.id asc
+        """,
+    )
+    fun findLiveByBrand(brandId: Long, today: LocalDate): List<Coupon>
+
+    fun countByBrandIdAndActiveTrue(brandId: Long): Long
+}
