@@ -11,10 +11,13 @@ import org.springframework.test.web.servlet.get
 @AutoConfigureMockMvc
 class PageSmokeTest(@Autowired private val mvc: MockMvc) {
     @Test
-    fun `home renders brand cards`() {
+    fun `home groups brands by category and hides inactive brands`() {
         mvc.get("/").andExpect {
             status { isOk() }
+            content { string(org.hamcrest.Matchers.containsString("여행 쿠폰")) }
             content { string(org.hamcrest.Matchers.containsString("마이리얼트립")) }
+            content { string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("쇼핑 할인코드"))) }
+            content { string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("쿠팡"))) }
         }
     }
 

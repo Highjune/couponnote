@@ -8,6 +8,7 @@ CREATE TABLE brands (
   id          BIGINT AUTO_INCREMENT PRIMARY KEY,
   slug        VARCHAR(40)  NOT NULL UNIQUE,
   name        VARCHAR(60)  NOT NULL,
+  category    VARCHAR(20)  NOT NULL,  -- TRAVEL / SHOPPING / SUBSCRIPTION (BrandCategory)
   tagline     VARCHAR(120) NOT NULL,
   sort_order  INT          NOT NULL DEFAULT 0,
   active      BIT(1)       NOT NULL DEFAULT b'1',
@@ -59,3 +60,7 @@ CREATE TABLE click_logs (
   INDEX idx_click_logs_coupon_at (coupon_id, clicked_at),
   INDEX idx_click_logs_at (clicked_at)
 ) ENGINE=InnoDB;
+
+-- 2026-10-15 브랜드 카테고리 추가 (최초 생성 이후 적용한 서버에만 실행)
+-- ALTER TABLE brands ADD COLUMN category VARCHAR(20) NOT NULL DEFAULT 'TRAVEL' AFTER name;
+-- ALTER TABLE brands ALTER COLUMN category DROP DEFAULT;

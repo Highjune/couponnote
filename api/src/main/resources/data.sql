@@ -1,6 +1,7 @@
 -- 로컬(H2) 시드. 운영 데이터 아님. 마이링크는 가입 후 발급받은 값으로 교체.
-INSERT INTO brands (slug, name, tagline, sort_order, active, created_at, updated_at) VALUES
-  ('myrealtrip', '마이리얼트립', '투어·티켓·항공·숙소 예약', 1, true, NOW(), NOW());
+INSERT INTO brands (slug, name, category, tagline, sort_order, active, created_at, updated_at) VALUES
+  ('myrealtrip', '마이리얼트립', 'TRAVEL',   '투어·티켓·항공·숙소 예약', 1, true, NOW(), NOW()),
+  ('coupang',    '쿠팡',         'SHOPPING', '로켓배송·로켓직구 (준비 중)', 1, false, NOW(), NOW());
 
 INSERT INTO coupons (brand_id, kind, title, code, benefit, condition, starts_at, ends_at, target_url, sort_order, active, created_at, updated_at) VALUES
   (1, 'PACK',   '히든 쿠폰팩 한 번에 받기',          NULL,        '투어·숙소 쿠폰 일괄 발급',  '마이리얼트립 회원, 발급 후 7일 내 사용', NULL, NULL, 'https://www.myrealtrip.com/promotions/marketing_partner_coupon', 1, true, NOW(), NOW()),

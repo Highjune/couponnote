@@ -10,6 +10,9 @@ body { margin: 0; font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans 
 h1 { font-size: 1.6rem; margin: 0 0 8px; }
 h2 { font-size: 1.2rem; margin: 32px 0 10px; }
 .lead { color: var(--muted); margin: 0 0 16px; }
+.category { margin-top: 28px; }
+.category h2 { margin-bottom: 2px; }
+.category .meta { margin-top: 0; }
 .brand-cards { list-style: none; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 .brand-cards a { display: block; border: 1px solid var(--line); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit; }
 .brand-cards strong { display: block; font-size: 1.05rem; }

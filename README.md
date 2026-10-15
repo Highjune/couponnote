@@ -15,7 +15,7 @@ Spring Boot 4.1 · Kotlin 2.3 · Java 21 · JPA · Thymeleaf · Caffeine 캐시 
 | 모듈 | 역할 | 의존 |
 |---|---|---|
 | `core` | 시간(KST)·예외. 스프링 무관 | — |
-| `domain` | 엔티티(Brand, Coupon, Article, ClickLog)·리포지토리 | core |
+| `domain` | 엔티티(Brand+BrandCategory, Coupon+CouponKind, Article, ClickLog)·리포지토리 | core |
 | `infrastructure` | 외부 어댑터. 마크다운 렌더 (예정: 파트너페이지 엑셀 임포트, 쿠폰 수집) | domain |
 | `application` | 유스케이스·캐시 | domain, infrastructure |
 | `api` | **배포 단위.** 컨트롤러·Thymeleaf·설정·Dockerfile | application |
@@ -28,7 +28,7 @@ Spring Boot 4.1 · Kotlin 2.3 · Java 21 · JPA · Thymeleaf · Caffeine 캐시 
 
 | URL | 내용 |
 |---|---|
-| `/` | 브랜드 카드 |
+| `/` | 카테고리(여행·쇼핑·구독)별 브랜드 카드. `brands.category` 로 묶고, 브랜드 없는 카테고리는 숨김 |
 | `/{brand}` | 브랜드 메인. 제목에 `[YYYY년 M월]` 자동. 섹션: 쿠폰팩 → 할인코드 → 카드 → 여행지 → 항공 → 특가 |
 | `/{brand}/{slug}` | 보조 글 (마크다운) |
 | `/go/{couponId}` | 클릭 기록 후 마이링크로 302. `noindex` |

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout('할인코드·쿠폰 총정리', '마이리얼트립 등 여행·쇼핑 플랫폼의 할인코드, 쿠폰, 카드사 즉시할인을 매달 갱신해 정리합니다.', ~{::content})}">
+      th:replace="~{layout :: layout('할인코드·쿠폰 총정리', '마이리얼트립 등 여행·쇼핑·구독 플랫폼의 할인코드, 쿠폰, 카드사 즉시할인을 매달 갱신해 정리합니다.', ~{::content})}">
 <body>
 <div th:fragment="content">
   <h1>이번 달 할인코드·쿠폰</h1>
-  <ul class="brand-cards">
-    <li th:each="b : ${brands}">
-      <a th:href="@{/{slug}(slug=${b.slug})}">
-        <strong th:text="${b.name}">브랜드</strong>
-        <span th:text="${b.tagline}">소개</span>
-        <em th:text="'유효 쿠폰 ' + ${b.liveCouponCount} + '개'">유효 쿠폰</em>
-      </a>
-    </li>
-  </ul>
+  <section class="category" th:each="s : ${sections}">
+    <h2 th:text="${s.category.label}">카테고리</h2>
+    <p class="meta" th:text="${s.category.description}">설명</p>
+    <ul class="brand-cards">
+      <li th:each="b : ${s.brands}">
+        <a th:href="@{/{slug}(slug=${b.slug})}">
+          <strong th:text="${b.name}">브랜드</strong>
+          <span th:text="${b.tagline}">소개</span>
+          <em th:text="'유효 쿠폰 ' + ${b.liveCouponCount} + '개'">유효 쿠폰</em>
+        </a>
+      </li>
+    </ul>
+  </section>
 </div>
 </body>
 </html>

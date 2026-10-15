@@ -16,7 +16,7 @@ class PageController(
 ) {
     @GetMapping("/")
     fun home(model: Model): String {
-        model.addAttribute("brands", brandQueryService.cards())
+        model.addAttribute("sections", brandQueryService.sections())
         model.addAttribute("canonical", "/")
         return "home"
     }
