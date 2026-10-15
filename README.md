@@ -18,7 +18,9 @@ Spring Boot 4.1 · Kotlin 2.3 · Java 21 · JPA · Thymeleaf · Caffeine 캐시 
 | `domain` | 엔티티(Brand, Coupon, Article, ClickLog)·리포지토리 | core |
 | `infrastructure` | 외부 어댑터. 마크다운 렌더 (예정: 파트너페이지 엑셀 임포트, 쿠폰 수집) | domain |
 | `application` | 유스케이스·캐시 | domain, infrastructure |
-| `api` | **배포 단위.** 컨트롤러·Thymeleaf·설정·Dockerfile | application |
+| `api` | **배포 단위.** 컨트롤러·Thymeleaf·JSON API·설정·Dockerfile | application, dto |
+| `dto` | 공개 API 응답 타입(순수 data class). api·client 공유 | — |
+| `client` | 다른 서비스가 couponnote API를 호출할 때 쓰는 SDK. `CouponnoteClient` + 자동설정. mavenLocal publish | dto |
 
 ## URL
 
@@ -28,6 +30,7 @@ Spring Boot 4.1 · Kotlin 2.3 · Java 21 · JPA · Thymeleaf · Caffeine 캐시 
 | `/{brand}` | 브랜드 메인. 제목에 `[YYYY년 M월]` 자동. 섹션: 쿠폰팩 → 할인코드 → 카드 → 여행지 → 항공 → 특가 |
 | `/{brand}/{slug}` | 보조 글 (마크다운) |
 | `/go/{couponId}` | 클릭 기록 후 마이링크로 302. `noindex` |
+| `/api/v1/brands/{slug}` | JSON. 페이지와 같은 캐시된 데이터. 없으면 `application/problem+json` 404 |
 | `/actuator/health`, `/actuator/prometheus` | 운영 |
 
 만료(`ends_at < 오늘`)·비활성 쿠폰은 자동 숨김. 페이지는 5분 캐시(`brandPage` 캐시 키에 오늘 날짜 포함).
@@ -40,6 +43,37 @@ Spring Boot 4.1 · Kotlin 2.3 · Java 21 · JPA · Thymeleaf · Caffeine 캐시 
 ```
 
 H2 콘솔: http://localhost:8081/h2-console (JDBC URL `jdbc:h2:mem:couponnote`, sa / 빈 비밀번호)
+
+## client 모듈 (다른 서비스에서 호출할 때)
+
+회사 레포의 `client` 모듈과 같은 역할. 소비자는 HTTP·JSON을 몰라도 된다.
+
+```bash
+./gradlew :client:publishToMavenLocal     # kr.couponnote:couponnote-client:0.0.1-SNAPSHOT
+```
+
+소비자 쪽 (예: tennis-record-k 홈에 "오늘의 쿠폰"):
+
+```kotlin
+// build.gradle.kts
+repositories { mavenLocal(); mavenCentral() }
+dependencies { implementation("kr.couponnote:couponnote-client:0.0.1-SNAPSHOT") }
+```
+```yaml
+# application.yml
+couponnote.client.base-url: https://couponnote.kr
+```
+```kotlin
+class HomeController(private val couponnote: CouponnoteClient) {
+    fun home(model: Model) {
+        val brand = couponnote.getBrand("myrealtrip")          // null 이면 브랜드 없음
+        val first = brand?.sections?.firstOrNull()?.coupons?.firstOrNull()
+        model.addAttribute("couponUrl", first?.let { couponnote.absoluteUrl(it.goPath) })
+    }
+}
+```
+
+`base-url`만 있으면 `CouponnoteClient` 빈이 자동 등록된다. 테스트에선 인터페이스를 가짜로 바꿔 끼운다.
 
 ## 배포 (홈서버)
 

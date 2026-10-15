@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":application"))
+    implementation(project(":dto"))
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-validation")
