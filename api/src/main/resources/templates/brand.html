@@ -3,55 +3,72 @@
       th:replace="~{layout :: layout('[' + ${page.monthLabel} + '] ' + ${page.name} + ' 할인코드·쿠폰 총정리', ${page.name} + ' 할인코드, 쿠폰팩, 카드사 즉시할인, 여행지별 쿠폰을 ' + ${page.monthLabel} + ' 기준으로 정리했습니다.', ~{::content})}">
 <body>
 <div th:fragment="content">
-  <p class="breadcrumb"><a href="/">홈</a> › <span th:text="${page.name}">브랜드</span></p>
-  <h1><span class="month" th:text="${page.monthLabel}">월</span> <span th:text="${page.name} + ' 할인코드·쿠폰 총정리'">제목</span></h1>
-  <p class="lead" th:text="${page.tagline}">소개</p>
+  <section class="hero-dark">
+    <div class="container">
+      <span class="pill" th:text="'✈️ ' + ${page.monthLabel} + ' 최신 업데이트'">월</span>
+      <h1><span th:text="${page.name} + '에서'">브랜드에서</span><br><em>이 쿠폰 안 쓰면 손해입니다</em></h1>
+      <p class="sub">파트너 전용 할인코드부터 카드사 즉시할인까지<br>쿠폰노트가 대신 다 모아봤습니다</p>
+      <ul class="trust">
+        <li><i class="g"></i>실시간 유효</li>
+        <li><i class="r"></i>조건 명시</li>
+        <li><i class="b"></i>파트너 공식 코드</li>
+      </ul>
+    </div>
+  </section>
 
-  <nav class="toc" th:if="${page.sections.size() > 1}">
-    <a th:each="s : ${page.sections}" th:href="'#' + ${s.kind}" th:text="${s.label}">섹션</a>
-  </nav>
+  <div class="container">
+    <aside class="disclosure" role="note" th:text="${disclosure}"></aside>
 
-  <section th:each="s : ${page.sections}" class="coupon-section" th:id="${s.kind}">
-    <h2 th:text="${s.label}">섹션</h2>
-    <ul class="coupons">
-      <li class="coupon" th:each="c : ${s.coupons}">
-        <div class="coupon-main">
-          <strong th:text="${c.title}">제목</strong>
-          <p class="benefit" th:text="${c.benefit}">혜택</p>
-          <div class="code-box" th:if="${c.code}">
-            <code th:text="${c.code}">CODE</code>
-            <button type="button" class="copy" th:attr="data-code=${c.code}">복사</button>
+    <nav class="toc" th:if="${page.sections.size() > 1}">
+      <a th:each="s : ${page.sections}" th:href="'#' + ${s.kind}" th:text="${s.label}">섹션</a>
+    </nav>
+
+    <section th:each="s : ${page.sections}" class="panel" th:id="${s.kind}">
+      <h2><span class="emoji" th:text="${s.kind.emoji}">🎫</span> <span th:text="${page.name} + ' ' + ${s.label}">섹션</span> <span class="tag" th:text="${page.monthLabel.substring(6)} + ' 진행중'">진행중</span></h2>
+      <p class="panel-desc" th:text="${s.kind.description}">설명</p>
+      <ul class="coupons">
+        <li th:each="c : ${s.coupons}" th:class="${c.featured} ? 'coupon featured' : 'coupon'">
+          <div class="coupon-main">
+            <p class="cond-top">
+              <span th:text="${c.title}">제목</span>
+              <span class="best" th:if="${c.featured}">BEST</span>
+            </p>
+            <p class="amount" th:text="${c.benefit}">혜택</p>
+            <div class="code-box" th:if="${c.code}">
+              <code th:text="${c.code}">CODE</code>
+              <button type="button" class="copy" th:attr="data-code=${c.code}">복사</button>
+            </div>
+            <p class="cond" th:if="${c.condition}" th:text="${c.condition}">조건</p>
           </div>
-          <p class="cond" th:if="${c.condition}" th:text="${c.condition}">조건</p>
-        </div>
-        <div class="coupon-side">
-          <span class="until" th:text="${c.endsAt} != null ? ${#temporals.format(c.endsAt, 'M월 d일')} + '까지' : '예산 소진 시까지'">만료</span>
-          <a class="btn go" th:href="@{/go/{id}(id=${c.id})}" rel="sponsored nofollow" target="_blank"
-             th:attr="data-code=${c.code}"
-             th:text="${c.code} != null ? '코드 복사하고 받으러 가기' : '받으러 가기'">받기</a>
-        </div>
-      </li>
-    </ul>
-  </section>
+          <div class="coupon-side">
+            <span class="until" th:text="${c.endsAt} != null ? ${#temporals.format(c.endsAt, 'M월 d일')} + '까지' : '예산 소진 시까지'">만료</span>
+            <a class="btn go" th:href="@{/go/{id}(id=${c.id})}" rel="sponsored nofollow" target="_blank"
+               th:attr="data-code=${c.code}"
+               th:text="${c.code} != null ? '코드 복사하고 받기 →' : '쿠폰 받기 →'">받기</a>
+          </div>
+        </li>
+      </ul>
+    </section>
 
-  <section class="howto">
-    <h2>할인코드 쓰는 법</h2>
-    <ol>
-      <li>위 버튼을 누르면 코드가 복사되고 <span th:text="${page.name}">플랫폼</span>이 새 탭으로 열립니다.</li>
-      <li>상품을 고른 뒤 결제 화면의 <b>할인코드 입력</b>란에 붙여넣습니다.</li>
-      <li>최소 결제금액·사용 기간 조건을 채우면 즉시 할인됩니다.</li>
-    </ol>
-  </section>
+    <section class="tip">
+      <h3>💡 이렇게 쓰세요</h3>
+      <ul>
+        <li>버튼을 누르면 <b>코드가 복사</b>되고 <span th:text="${page.name}">플랫폼</span>이 새 탭으로 열립니다.</li>
+        <li>상품을 고른 뒤 결제 화면의 <b>할인코드 입력</b>란에 붙여넣으세요. 코드는 <b>등록 후 7일 이내</b> 사용해야 합니다.</li>
+        <li>다른 쿠폰·코드와 <b>중복 사용 불가</b>. 금액이 큰 쪽 하나만 쓰세요. 카드 결제 혜택과는 중복됩니다.</li>
+      </ul>
+    </section>
 
-  <section th:if="${!articles.isEmpty()}" class="articles">
-    <h2>함께 보면 좋은 글</h2>
-    <ul>
-      <li th:each="a : ${articles}">
-        <a th:href="@{/{brand}/{slug}(brand=${page.slug}, slug=${a.slug})}" th:text="${a.title}">글</a>
-        <span th:text="${a.description}">설명</span>
-      </li>
-    </ul>
-  </section>
+    <section th:if="${!articles.isEmpty()}" class="articles">
+      <h2>함께 보면 좋은 글</h2>
+      <ul>
+        <li th:each="a : ${articles}">
+          <a th:href="@{/{brand}/{slug}(brand=${page.slug}, slug=${a.slug})}" th:text="${a.title}">글</a>
+          <span th:text="${a.description}">설명</span>
+        </li>
+      </ul>
+    </section>
+  </div>
 </div>
 </body>
 </html>

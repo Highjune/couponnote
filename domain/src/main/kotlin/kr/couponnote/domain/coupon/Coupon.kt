@@ -17,13 +17,13 @@ import kr.couponnote.domain.common.BaseEntity
 import java.time.LocalDate
 
 /** 페이지 섹션 구분. 순서가 페이지 섹션 순서 */
-enum class CouponKind(val label: String) {
-    PACK("쿠폰팩"),
-    CODE("할인코드"),
-    CARD("카드사 즉시할인"),
-    REGION("여행지별 쿠폰"),
-    FLIGHT("항공권 프로모션"),
-    EVENT("특가·이벤트"),
+enum class CouponKind(val label: String, val emoji: String, val description: String) {
+    PACK("쿠폰팩", "🎁", "버튼 한 번으로 여러 장이 한 번에 발급되는 쿠폰팩입니다. 코드 입력이 필요 없습니다."),
+    CODE("할인코드", "🤝", "결제 화면에 입력하는 파트너 전용 코드입니다. 금액대에 따라 유리한 쪽 하나만 고르세요."),
+    CARD("카드사 즉시할인", "💳", "해당 카드로 결제하면 자동 적용됩니다. 할인코드와 중복됩니다."),
+    REGION("여행지별 쿠폰", "🗺️", "특정 여행지 상품에만 적용되는 쿠폰입니다."),
+    FLIGHT("항공권 프로모션", "✈️", "이번 달 특가 노선과 항공권 혜택입니다."),
+    EVENT("특가·이벤트", "🔥", "기간 한정 이벤트와 제휴 혜택입니다."),
 }
 
 @Entity
@@ -66,6 +66,10 @@ class Coupon(
 
     @Column(nullable = false)
     var sortOrder: Int = 0,
+
+    /** 섹션 안에서 강조(BEST 뱃지·강조 테두리). 보통 금액이 가장 큰 쿠폰 1개 */
+    @Column(nullable = false)
+    var featured: Boolean = false,
 
     @Column(nullable = false)
     var active: Boolean = true,

@@ -19,6 +19,7 @@
   <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
 <body>
+  <div class="ticker"><div class="wrap">🔥 매달 갱신되는 최신 할인코드 — 마이리얼트립 <a href="/myrealtrip">전체 보기 →</a></div></div>
   <header class="site-header">
     <div class="wrap">
       <a href="/" class="logo" aria-label="쿠폰노트 홈">
@@ -32,8 +33,7 @@
     </div>
   </header>
 
-  <main class="container">
-    <aside class="disclosure" role="note" th:text="${disclosure}"></aside>
+  <main>
     <div th:replace="${content}"></div>
   </main>
 

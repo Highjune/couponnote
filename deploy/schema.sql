@@ -28,6 +28,7 @@ CREATE TABLE coupons (
   ends_at     DATE         NULL,
   target_url  VARCHAR(300) NOT NULL,
   sort_order  INT          NOT NULL DEFAULT 0,
+  featured    BIT(1)       NOT NULL DEFAULT b'0',  -- 섹션 내 강조(BEST)
   active      BIT(1)       NOT NULL DEFAULT b'1',
   created_at  DATETIME(6)  NOT NULL,
   updated_at  DATETIME(6)  NOT NULL,
@@ -64,3 +65,5 @@ CREATE TABLE click_logs (
 -- 2026-10-15 브랜드 카테고리 추가 (최초 생성 이후 적용한 서버에만 실행)
 -- ALTER TABLE brands ADD COLUMN category VARCHAR(20) NOT NULL DEFAULT 'TRAVEL' AFTER name;
 -- ALTER TABLE brands ALTER COLUMN category DROP DEFAULT;
+-- 2026-10-15 쿠폰 강조 플래그
+-- ALTER TABLE coupons ADD COLUMN featured BIT(1) NOT NULL DEFAULT b'0' AFTER sort_order;

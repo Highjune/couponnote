@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout :: layout(${article.title}, ${article.description}, ~{::content})}">
 <body>
-<div th:fragment="content">
+<div th:fragment="content" class="container">
+  <aside class="disclosure" role="note" th:text="${disclosure}"></aside>
   <p class="breadcrumb"><a href="/">홈</a> › <a th:href="@{/{b}(b=${article.brandSlug})}" th:text="${article.brandName}">브랜드</a></p>
   <article>
     <h1 th:text="${article.title}">제목</h1>

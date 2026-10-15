@@ -45,7 +45,34 @@ h2 { font-size: 1.2rem; letter-spacing: -.01em; margin: 36px 0 12px; }
 .brand-cards .dot { width: 7px; height: 7px; border-radius: 50%; background: #10b981; }
 .brand-cards .arrow { margin-top: auto; padding-top: 10px; color: var(--accent); font-weight: 700; font-size: .92rem; }
 
+/* ticker + dark hero (brand page) */
+.ticker { background: var(--accent); color: #fff; font-size: .85rem; font-weight: 600; text-align: center; }
+.ticker .wrap { padding: 6px 16px; }
+.ticker a { color: #fff; text-decoration: underline; margin-left: 6px; }
+.hero-dark { background: radial-gradient(900px 400px at 85% 0%, #7a1b1b 0%, #1a0b0b 60%, #0b0b0f 100%); color: #fff; padding: 44px 0 36px; text-align: center; }
+.hero-dark .pill { display: inline-block; background: rgba(255,90,95,.18); border: 1px solid rgba(255,90,95,.6); color: #ffb4b6; font-size: .82rem; font-weight: 700; padding: 5px 14px; border-radius: 999px; }
+.hero-dark h1 { color: #fff; font-size: 2.2rem; line-height: 1.25; margin: 14px 0 10px; }
+.hero-dark h1 em { font-style: normal; color: #ff7a45; }
+.hero-dark .sub { color: #d1d5db; margin: 0; font-size: 1rem; }
+.hero-dark .trust { list-style: none; padding: 0; margin: 16px 0 0; display: flex; justify-content: center; gap: 18px; font-size: .82rem; color: #cbd5e1; }
+.hero-dark .trust i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.hero-dark .trust .g { background: #22c55e; } .hero-dark .trust .r { background: #ff5a5f; } .hero-dark .trust .b { background: #60a5fa; }
+
 /* brand page */
+.panel { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 18px; margin-top: 22px; box-shadow: 0 6px 20px rgba(15,23,42,.04); }
+.panel h2 { margin: 0 0 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.panel h2 .tag { font-size: .72rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 2px 10px; border-radius: 999px; }
+.panel-desc { margin: 0 0 14px; color: #4b5563; font-size: .95rem; }
+.coupon .cond-top { margin: 0; font-size: .9rem; color: #4b5563; display: flex; align-items: center; gap: 8px; }
+.coupon .amount { margin: 2px 0 10px; font-size: 1.35rem; font-weight: 800; color: var(--ink); letter-spacing: -.01em; }
+.coupon .amount::first-line { color: var(--accent-dark); }
+.best { font-size: .68rem; font-weight: 800; color: #fff; background: #b91c1c; padding: 2px 7px; border-radius: 5px; letter-spacing: .04em; }
+.coupon.featured { border-color: #fca5a5; background: linear-gradient(180deg, #fff7f7, #fff); box-shadow: 0 8px 22px rgba(255,90,95,.12); }
+.coupon.featured::before { background: #b91c1c; }
+.tip { margin-top: 22px; background: var(--accent-soft); border: 1px solid #fecaca; border-radius: 14px; padding: 18px 20px; }
+.tip h3 { margin: 0 0 8px; font-size: 1.02rem; color: #991b1b; }
+.tip ul { margin: 0; padding-left: 18px; color: #374151; }
+.tip li { margin: 4px 0; }
 h1 .month { display: inline-block; font-size: .95rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 2px 10px; border-radius: 999px; vertical-align: middle; margin-right: 6px; }
 .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 8px; }
 .toc a { font-size: .85rem; text-decoration: none; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
@@ -80,6 +107,9 @@ article .body th, article .body td { border: 1px solid var(--line); padding: 6px
 
 @media (max-width: 640px) {
   .hero h1 { font-size: 1.7rem; }
+  .hero-dark h1 { font-size: 1.6rem; }
+  .hero-dark .trust { gap: 12px; }
+  .panel { padding: 16px; }
   .coupon { grid-template-columns: 1fr; padding: 16px; }
   .coupon-side { flex-direction: row; align-items: center; justify-content: space-between; min-width: 0; }
   .coupon-side .btn { flex: 1; margin-left: 12px; }

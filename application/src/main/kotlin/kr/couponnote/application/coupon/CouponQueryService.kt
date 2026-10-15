@@ -16,6 +16,7 @@ data class CouponView(
     val benefit: String,
     val condition: String?,
     val endsAt: LocalDate?,
+    val featured: Boolean,
 )
 
 data class CouponSection(val kind: CouponKind, val label: String, val coupons: List<CouponView>)
@@ -46,7 +47,7 @@ class CouponQueryService(
                 CouponSection(
                     kind = kind,
                     label = kind.label,
-                    coupons = list.map { CouponView(it.id, it.title, it.code, it.benefit, it.condition, it.endsAt) },
+                    coupons = list.map { CouponView(it.id, it.title, it.code, it.benefit, it.condition, it.endsAt, it.featured) },
                 )
             }
         return BrandPage(brand.slug, brand.name, brand.tagline, Kst.monthLabel(today), sections)

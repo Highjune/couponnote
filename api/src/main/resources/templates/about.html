@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout :: layout('사이트 소개 · 제휴 문의', '쿠폰노트는 여행·쇼핑·구독 플랫폼의 할인코드와 쿠폰을 매달 한 곳에 정리하는 사이트입니다.', ~{::content})}">
 <body>
-<div th:fragment="content">
+<div th:fragment="content" class="container">
+  <aside class="disclosure" role="note" th:text="${disclosure}"></aside>
   <p class="breadcrumb"><a href="/">홈</a> › 소개</p>
   <article class="prose">
     <h1>쿠폰노트 소개</h1>

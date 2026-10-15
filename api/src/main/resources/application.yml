@@ -11,7 +11,12 @@ spring:
     resources:
       cache:
         cachecontrol:
-          max-age: 7d
+          max-age: 365d
+      chain:
+        strategy:
+          content:          # /css/site.css → /css/site-<md5>.css 로 링크가 바뀌어 배포마다 캐시가 무효화됨
+            enabled: true
+            paths: /**
 
 server:
   port: 8081

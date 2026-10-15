@@ -45,7 +45,7 @@ class PageSmokeTest(@Autowired private val mvc: MockMvc) {
         mvc.get("/myrealtrip").andExpect {
             status { isOk() }
             content { string(org.hamcrest.Matchers.containsString("data-code=\"EXAMPLE10\"")) }
-            content { string(org.hamcrest.Matchers.containsString("코드 복사하고 받으러 가기")) }
+            content { string(org.hamcrest.Matchers.containsString("코드 복사하고 받기")) }
         }
     }
 

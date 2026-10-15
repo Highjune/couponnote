@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout :: layout('할인코드·쿠폰 총정리', '마이리얼트립 등 여행·쇼핑·구독 플랫폼의 할인코드, 쿠폰, 카드사 즉시할인을 매달 갱신해 정리합니다.', ~{::content})}">
 <body>
-<div th:fragment="content">
+<div th:fragment="content" class="container">
+  <aside class="disclosure" role="note" th:text="${disclosure}"></aside>
   <section class="hero">
     <p class="eyebrow">매달 갱신 · 무료</p>
     <h1>이번 달 할인코드,<br>한 곳에서 확인하세요</h1>
