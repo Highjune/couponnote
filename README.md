@@ -90,7 +90,15 @@ class HomeController(private val couponnote: CouponnoteClient) {
 
 배포: `git push origin release` → Jenkins(2분 폴링) → `:api:bootJar :api:test` → DockerHub `highjunea37/couponnote-api:latest` → `docker compose pull && up -d`
 
-스키마 변경 시: `deploy/schema.sql`에 ALTER 추가 → 서버에서 `docker exec -i tennis-mysql mysql -ucoupon -p coupon < 변경분` 수동 적용 → 배포
+스키마 변경 시: `deploy/schema.sql`에 ALTER 추가 → 서버에서 수동 적용 → 배포
+
+```bash
+# 서버에서. 한글을 넣거나 읽을 땐 --default-character-set=utf8mb4 필수 (없으면 latin1로 들어가 ë§ˆì´ 처럼 깨짐)
+set -a; . /home/highjune/services/couponnote/.env; set +a
+docker exec -i tennis-mysql mysql -ucoupon -p"$COUPON_DB_PASSWORD" --default-character-set=utf8mb4 coupon < 변경분.sql
+```
+
+데이터(brands/coupons) 입력도 같은 명령으로. 입력 후 페이지 캐시(5분)를 바로 비우려면 `docker compose restart api`.
 
 ## 운영 규칙
 
