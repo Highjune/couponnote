@@ -43,25 +43,3 @@ class PageSmokeTest(@Autowired private val mvc: MockMvc) {
     }
 }
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class ApiSmokeTest(@Autowired private val mvc: MockMvc) {
-    @Test
-    fun `brand json has goPath and hides expired`() {
-        mvc.get("/api/v1/brands/myrealtrip").andExpect {
-            status { isOk() }
-            content { contentTypeCompatibleWith("application/json") }
-            jsonPath("$.monthLabel") { exists() }
-            jsonPath("$.sections[0].coupons[0].goPath") { value(org.hamcrest.Matchers.startsWith("/go/")) }
-            content { string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("만료된 코드"))) }
-        }
-    }
-
-    @Test
-    fun `unknown brand json is problem 404`() {
-        mvc.get("/api/v1/brands/nope").andExpect {
-            status { isNotFound() }
-            content { contentTypeCompatibleWith("application/problem+json") }
-        }
-    }
-}

@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":application"))
-    implementation(project(":dto"))
+    // implementation(project(":dto"))   // 외부 소비자용 JSON API 를 켤 때 (settings 의 :dto 와 함께)
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-validation")
