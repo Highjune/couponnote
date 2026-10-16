@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class CacheConfig {
     @Bean
     fun cacheManager(): CacheManager =
-        CaffeineCacheManager("brandCards", "brandPage", "article", "articleList").apply {
+        CaffeineCacheManager("brandCards", "brandPage", "article", "articleList", "liveSummary").apply {
             setCaffeine(Caffeine.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).maximumSize(500))
         }
 }

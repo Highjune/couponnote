@@ -29,6 +29,12 @@ data class BrandPage(
     val sections: List<CouponSection>,
 )
 
+/** 상단 상태바. 쿠폰핀식 고정 문구 대신 DB에서 계산한 오늘 숫자를 보여준다 */
+data class LiveSummary(val liveCount: Int, val closing: ClosingSoon?)
+
+/** 7일 안에 끝나는 쿠폰 중 가장 임박한 1개. daysLeft 0 = 오늘 마감 */
+data class ClosingSoon(val brandSlug: String, val title: String, val daysLeft: Long)
+
 @Service
 @Transactional(readOnly = true)
 class CouponQueryService(
@@ -51,5 +57,20 @@ class CouponQueryService(
                 )
             }
         return BrandPage(brand.slug, brand.name, brand.tagline, Kst.monthLabel(today), sections)
+    }
+
+    @Cacheable("liveSummary")
+    fun liveSummary(): LiveSummary {
+        val today = Kst.today()
+        val live = couponRepository.findLiveAll(today)
+        val closing = live
+            .filter { it.endsAt != null && !it.endsAt!!.isAfter(today.plusDays(CLOSING_WINDOW_DAYS)) }
+            .minByOrNull { it.endsAt!! }
+            ?.let { ClosingSoon(it.brand.slug, it.title, java.time.temporal.ChronoUnit.DAYS.between(today, it.endsAt)) }
+        return LiveSummary(live.size, closing)
+    }
+
+    private companion object {
+        const val CLOSING_WINDOW_DAYS = 7L
     }
 }

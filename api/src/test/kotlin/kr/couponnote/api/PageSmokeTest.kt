@@ -16,6 +16,8 @@ class PageSmokeTest(@Autowired private val mvc: MockMvc) {
             status { isOk() }
             content { string(org.hamcrest.Matchers.containsString("여행 쿠폰")) }
             content { string(org.hamcrest.Matchers.containsString("마이리얼트립")) }
+            content { string(org.hamcrest.Matchers.containsString("오늘 기준 유효 쿠폰")) }
+            content { string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("매달 갱신되는 최신 할인코드"))) }
             content { string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("쇼핑 할인코드"))) }
             content { string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("쿠팡"))) }
         }
