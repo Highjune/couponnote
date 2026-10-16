@@ -64,6 +64,10 @@ class Coupon(
     @Column(nullable = false, length = 300)
     var targetUrl: String,
 
+    /** 마이링크가 가리키는 원본 URL (www.myrealtrip.com/...). 운영 식별·재발급용, 버튼에는 쓰지 않음 */
+    @Column(length = 300)
+    var landingUrl: String? = null,
+
     @Column(nullable = false)
     var sortOrder: Int = 0,
 

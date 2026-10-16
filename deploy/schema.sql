@@ -26,7 +26,8 @@ CREATE TABLE coupons (
   `condition` VARCHAR(300) NULL,
   starts_at   DATE         NULL,
   ends_at     DATE         NULL,
-  target_url  VARCHAR(300) NOT NULL,
+  target_url  VARCHAR(300) NOT NULL,              -- 마이링크 (myrealt.rip/...)
+  landing_url VARCHAR(300) NULL,                  -- 마이링크가 가리키는 원본 URL
   sort_order  INT          NOT NULL DEFAULT 0,
   featured    BIT(1)       NOT NULL DEFAULT b'0',  -- 섹션 내 강조(BEST)
   active      BIT(1)       NOT NULL DEFAULT b'1',
@@ -67,3 +68,5 @@ CREATE TABLE click_logs (
 -- ALTER TABLE brands ALTER COLUMN category DROP DEFAULT;
 -- 2026-10-15 쿠폰 강조 플래그
 -- ALTER TABLE coupons ADD COLUMN featured BIT(1) NOT NULL DEFAULT b'0' AFTER sort_order;
+-- 2026-10-16 원본 URL
+-- ALTER TABLE coupons ADD COLUMN landing_url VARCHAR(300) NULL AFTER target_url;
